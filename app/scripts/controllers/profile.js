@@ -8,12 +8,19 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('ProfileCtrl', function ($scope, $state, $stateParams, $http, UserService) {
-    $scope.user = {};
+  .controller('ProfileCtrl', function ($scope, $state, $stateParams, $http, user, UserService, GondolaService) {
+    $scope.user = user.data;
+    $scope.favoriteGondola = {};
 
-    UserService.getUser($stateParams.id)
-      .then(function (user) {
-        console.log(user);
-        $scope.user = user.data;
+    GondolaService.getSpecific($scope.user.favorite)
+      .then(function (gondola) {
+        $scope.favoriteGondola = gondola;
       });
+
+    GondolaService.getFromOwner($scope.user.id)
+      .then(function (gondolas) {
+        console.log(gondolas);
+        $scope.gondolas = gondolas;
+      });
+
   });

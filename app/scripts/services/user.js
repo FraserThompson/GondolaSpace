@@ -11,6 +11,7 @@ angular.module('publicApp')
 
       this.createUser = function (data) {
         return $http({
+          withCredentials: true,
           method: 'POST',
           url: api + '/user',
           data: {'signedRequest': data}
@@ -19,9 +20,10 @@ angular.module('publicApp')
 
       this.updateUser = function (data) {
         return $http({
+          withCredentials: true,
           method: 'PUT',
           url: api + '/user',
-          data: data
+          data: {'update': data}
         });
       }
 

@@ -13,7 +13,7 @@ angular.module('publicApp')
           }
         }
         var keysSorted = keys.sort(function(a, b) {return -(gondola.flavours[a] - gondola.flavours[b])});
-        var flavour = keysSorted[0] ? keysSorted[0] + " & " + keysSorted[1] : "None yet";
+        var flavour = (keysSorted[0] && keysSorted[1]) ? keysSorted[0] + " & " + keysSorted[1] : "bland";
         return flavour;
       }
 
@@ -34,6 +34,21 @@ angular.module('publicApp')
         return $http(request);
       }
 
+      this.getFromOwner = function(owner) {
+        var deferred = $q.defer();
+
+        $http({
+          method: 'GET',
+          url: api + '/api?owner=' + owner
+        }).then( function (gondola) {
+          deferred.resolve(gondola.data);
+        }, function (err) {
+          deferred.reject(err);
+        });
+
+        return deferred.promise;
+      }
+
       this.getRandom = function() {
         var deferred = $q.defer();
 
@@ -50,7 +65,7 @@ angular.module('publicApp')
         return deferred.promise;
       }
 
-      this.getSpecific = function(id) {
+      this.getSpecific = function (id) {
         var deferred = $q.defer();
 
         $http({
@@ -78,6 +93,7 @@ angular.module('publicApp')
           url: api + '/api',
           data: data
         }).then (function (gondola) {
+          console.log(gondola.data);
           deferred.resolve(gondola.data);
         }, function (err) {
           deferred.reject(err);

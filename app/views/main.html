@@ -1,48 +1,54 @@
 <div class="row">
-  <div class="col-sm-12">
-    <a href="" ng-click="getRandomGondola()">
-      <img ng-src="http://localhost:3000/uploads/gondola/{{gondola.file.thumbnail}}" alt="Gondola"/>
+  <div class="col-xs-11">
+    <h2 style="margin-top: 0;">this gondola is {{gondola.flavour}} with a score of {{gondola.voted.umami - gondola.voted.notUmami}}</h2>
+  </div>
+  <div class="col-xs-1">
+    <a href="" ng-click="addFavorite(gondola._id)">favorite</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <a href="" ng-click="getRandom()">
+      <img ng-src="http://localhost:3000/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/>
     </a>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-12">
-    <h4>Score: <span class="badge">{{gondola.voted.umami - gondola.voted.notUmami}}</span> Flavour: <span class="badge">{{gondola.flavour}}</span></h4>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-2">
-    <a href="#/profile/{{owner.id}}"><img ng-src="http://localhost:3000/uploads/profile/{{owner.pic}}" alt="owner" width="80" height="80"/></a>
-  </div>
-  <div class="col-sm-10">
+<div class="row" style="margin-top: 23px;">
     <form>
-      <div class="btn-group" role="group">
-        <button class="btn btn-success" ng-click="updateVote(gondola._id, gondola.voted, 'umami')">
-          Umami
-          <span class="badge">{{gondola.voted.umami}}</span>
+      <div class="col-xs-3">
+        <div class="btn-group" role="group">
+          <button class="btn btn-success" ng-click="updateVote(gondola._id, gondola.voted, 'umami')">
+            Umami
+            <span class="badge">{{gondola.voted.umami}}</span>
+          </button>
+          <button class="btn btn-danger" ng-click="updateVote(gondola._id, gondola.voted, 'notUmami')">
+           Spicy
+           <span class="badge">{{gondola.voted.notUmami}}</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-xs-5">
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" tooltip-placement="top" uib-tooltip="calming or nostalgic" ng-click="updateFlavour(gondola._id, gondola.flavours, 'sweet')">
+          Sweet
+          <span class="badge">{{gondola.flavours.sweet}}</span>
         </button>
-        <button class="btn btn-danger" ng-click="updateVote(gondola._id, gondola.voted, 'notUmami')">
-         Not Umami
-         <span class="badge">{{gondola.voted.notUmami}}</span>
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" tooltip-placement="top" uib-tooltip="funny or strange" ng-click="updateFlavour(gondola._id, gondola.flavours, 'salty')">
+          Salty
+          <span class="badge">{{gondola.flavours.salty}}</span>
+        </button>
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" tooltip-placement="top" uib-tooltip="melancholy or deep" ng-click="updateFlavour(gondola._id, gondola.flavours, 'bitter')">
+          Bitter
+          <span class="badge">{{gondola.flavours.bitter}}</span>
+        </button>
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" tooltip-placement="top" uib-tooltip="lighthearted or exciting" ng-click="updateFlavour(gondola._id, gondola.flavours, 'sour')">
+          Sour
+          <span class="badge">{{gondola.flavours.sour}}</span>
         </button>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" ng-click="updateFlavour(gondola._id, gondola.flavours, 'sweet')">
-        Sweet
-        <span class="badge">{{gondola.flavours.sweet}}</span>
-      </button>
-      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" ng-click="updateFlavour(gondola._id, gondola.flavours, 'salty')">
-        Salty
-        <span class="badge">{{gondola.flavours.salty}}</span>
-      </button>
-      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" ng-click="updateFlavour(gondola._id, gondola.flavours, 'bitter')">
-        Bitter
-        <span class="badge">{{gondola.flavours.bitter}}</span>
-      </button>
-      <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" ng-click="updateFlavour(gondola._id, gondola.flavours, 'sour')">
-        Sour
-        <span class="badge">{{gondola.flavours.sour}}</span>
-      </button>
     </form>
+    <div class="col-xs-4">
+      this gondola was discovered by <a style="float: right;" ui-sref="profile({id: owner.id })"><img ng-src="http://localhost:3000/uploads/profile/{{owner.pic}}" alt="owner" width="80" height="80"/></a>
+    </div>
   </div>
 </div>
 

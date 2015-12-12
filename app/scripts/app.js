@@ -16,7 +16,8 @@ angular
     'ui.router',
     'ngSanitize',
     'ngTouch',
-    'ezfb'
+    'ezfb',
+    'ui.bootstrap'
   ])
   .config(function ($stateProvider, $urlRouterProvider, ezfbProvider) {
     ezfbProvider.setLocale('en_NZ');
@@ -30,15 +31,32 @@ angular
 
     $stateProvider
       .state('home', {
-        url: '/:gondola',
+        url: '/?gondola',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main',
+        reloadOnSearch: false,
+        resolve: { 
+          gondola: function(GondolaService, $stateParams) {
+              if ($stateParams.gondola) {
+                console.log($stateParams.gondola);
+                return GondolaService.getSpecific($stateParams.gondola);
+              } else {
+                return GondolaService.getRandom();
+            }
+          }
+        },
+        onEnter: function($location, gondola) {
+          $location.search('gondola', gondola._id)
+        }
       })
       .state('profile', {
         url: '/profile/:id',
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl',
-        controllerAs: 'profile'
+        resolve: { 
+          user: function(UserService, $stateParams) {
+            return UserService.getUser($stateParams.id)
+          }
+        }
       });
   });

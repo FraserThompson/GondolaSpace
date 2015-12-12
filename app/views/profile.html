@@ -1,8 +1,27 @@
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-sm-2">
 		<img ng-src="http://localhost:3000/uploads/profile/{{user.pic}}" alt="owner"/>
 	</div>
+	<div class="col-sm-10">
+		<p ng-hide="{{user.description}}">No description.</p>
+		<p>{{user.description}}</p>
+	</div>
 </div>
-<p>{{user.description}}</p>
-<h2>Favorite Gondola:</h2>
-<h2>Posted Gondolas:</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<h2>Favorite Gondola:</h2>
+      	<img ng-src="http://localhost:3000/uploads/gondola/{{favoriteGondola.file.thumbnail}}" style="width: 50%;" alt="Gondola"/>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<h2>Posted Gondolas:</h2>
+	</div>
+</div>
+<div class="row">
+	<div ng-repeat="gondola in gondolas">
+		<div class="col-sm-3">
+			<a href="" ui-sref="home({gondola: gondola._id})"><img ng-src="http://localhost:3000/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/></a>
+		</div>
+	</div>
+</div>

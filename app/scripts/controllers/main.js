@@ -8,40 +8,28 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('MainCtrl', function ($scope, $state, $stateParams, $http, GondolaService, UserService) {
+  .controller('MainCtrl', function ($scope, $state, $location, $stateParams, $http, gondola, GondolaService, UserService) {
   	var votedFlavours = {};
   	var votedVote = "";
 
-  	$scope.gondola = {};
-  	$scope.owner = {};
+  	$scope.gondola = gondola;
 
-  	$scope.$watch('gondola', function(gondola, oldGondola) {
-	  $state.go('home', { gondola: gondola._id }, {notify:false, reload:true});
-	  votedFlavours = {};
-	  votedVote = "";
-	  UserService.getUser(gondola.owner)
+  	UserService.getUser(gondola.owner)
 	  	.then (function (owner) {
 	  		$scope.owner = owner.data;
 	  	});
-	});
+
+    $scope.getRandom = function() {
+    	GondolaService.getRandom()
+    		.then(function (gondola) {
+    			votedVote = "";
+    			votedFlavours = {};
+    			$scope.gondola = gondola
+    			$location.search('gondola', gondola._id)
+    		});
+    }
 
   	/***************************** GONDOLA METHODS *************************************/
-  	// Takes an id, gets a gondola
-  	$scope.getSpecificGondola = function(id) {
-		GondolaService.getSpecific(id)
-	  		.then(function (gondola) {
-  				$scope.gondola = gondola;
-			});
-  	}
-
-  	// Gets a random gondola
-  	$scope.getRandomGondola = function() {
-  		GondolaService.getRandom()
-	  		.then(function (gondola) {
-	  			$scope.gondola = gondola;
-	  		});
-  	}
-
   	// Uploads a new Gondola
 	$scope.uploadGondola = function () {
 		GondolaService.uploadGondola($scope.gondolaFile)
@@ -76,23 +64,16 @@ angular.module('publicApp')
 	  		votedFlavours[flavour] = 1;
 	  		flavours[flavour] += 1;
   		}
-  		console.log(flavours);
+
   		GondolaService.updateGondola(id, flavours)
   			.then(function (gondola) {
-  				console.log(gondola);
   				$scope.gondola.flavour = GondolaService.getFlavour(gondola);
   			});
   	}
 
-  	$scope.goToProfile = function (id) {
-		$state.go('profile', { id: id });
+  	$scope.addFavorite = function (id) {
+  		UserService.updateUser({'favorite': id});
   	}
-
-  	if ($stateParams.gondola) {
-  		$scope.getSpecificGondola($stateParams.gondola);
-  	} else {
-  		$scope.getRandomGondola();
-	}
 
 	$('#myModal').on('hidden.bs.modal', function (e) {
 		$state.go('home', { gondola: $scope.gondola._id }, {notify:false, reload:true});
