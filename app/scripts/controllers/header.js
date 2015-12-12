@@ -11,6 +11,9 @@ angular.module('publicApp')
   .controller('HeaderCtrl', function ($scope, $state, $timeout, ezfb, GondolaService, UserService) {
   	$scope.user = {};
   	$scope.loginStatus = {};
+  	
+  	$scope.api_url = 'http://45.55.61.237';
+  	//$scope.api_url = 'http://localhost:3000';
 
   	 /***************************** FACEBOOK METHODS *************************************/
   	// Login to Facebook

@@ -12,6 +12,9 @@ angular.module('publicApp')
   	var votedFlavours = {};
   	var votedVote = "";
 
+  	$scope.api_url = 'http://45.55.61.237';
+  	//$scope.api_url = 'http://localhost:3000';
+
   	$scope.gondola = gondola;
 
   	UserService.getUser(gondola.owner)

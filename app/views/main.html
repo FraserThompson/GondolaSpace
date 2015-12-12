@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col-xs-12">
     <a href="" ng-click="getRandom()">
-      <img ng-src="http://localhost:3000/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/>
+      <img ng-src="http://{{api_url}}/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/>
     </a>
   </div>
 </div>
@@ -47,7 +47,7 @@
       </div>
     </form>
     <div class="col-xs-4">
-      this gondola was discovered by <a style="float: right;" ui-sref="profile({id: owner.id })"><img ng-src="http://localhost:3000/uploads/profile/{{owner.pic}}" alt="owner" width="80" height="80"/></a>
+      this gondola was discovered by <a style="float: right;" ui-sref="profile({id: owner.id })"><img ng-src="http://{{api_url}}/uploads/profile/{{owner.pic}}" alt="owner" width="80" height="80"/></a>
     </div>
   </div>
 </div>
