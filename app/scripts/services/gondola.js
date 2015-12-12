@@ -1,8 +1,9 @@
 angular.module('publicApp')
   .service('GondolaService', function ($http, $q) {
       var self = this;
-      var api = "http://localhost:3000";
-
+      //var api = "http://localhost:3000";
+      var api = '45.55.61.237';
+      
       this.getFlavour = function (gondola){
         var keys = Object.keys(gondola.flavours);
         var i = keys.length;

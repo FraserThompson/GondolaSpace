@@ -1,7 +1,7 @@
 angular.module('publicApp')
   .service('UserService', function ($http, $q) {
-      var api = "http://localhost:3000";
-
+      //var api = "http://localhost:3000";
+      var api = '45.55.61.237';
       this.getUser = function (id) {
         return $http({
           method: 'GET',
