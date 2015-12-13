@@ -24,7 +24,7 @@ angular.module('publicApp')
          var request = {
             withCredentials: true,
             method: 'POST',
-            url: api + '/api',
+            url: api + '/',
             data: fd,
             headers: {
                 'Content-Type': undefined
@@ -39,7 +39,7 @@ angular.module('publicApp')
 
         $http({
           method: 'GET',
-          url: api + '/api?owner=' + owner
+          url: api + '/?owner=' + owner
         }).then( function (gondola) {
           deferred.resolve(gondola.data);
         }, function (err) {
@@ -54,7 +54,7 @@ angular.module('publicApp')
 
         $http({
           method: 'GET',
-          url: api + '/api?random=1'
+          url: api + '/?random=1'
         }).then( function (gondola) {
           console.log(gondola);
           if (gondola.data === null){
@@ -75,7 +75,7 @@ angular.module('publicApp')
 
         $http({
           method: 'GET',
-          url: api + '/api?id=' + id
+          url: api + '/?id=' + id
         }).then( function (gondola) {
           if (gondola.data === null){
             deferred.resolve(null);
@@ -99,7 +99,7 @@ angular.module('publicApp')
 
         $http({
           method: 'PUT',
-          url: api + '/api',
+          url: api + '/',
           data: data
         }).then (function (gondola) {
           console.log(gondola.data);
