@@ -20,7 +20,7 @@ angular
     'ui.bootstrap'
   ])
   .run(function ($rootScope) {
-    $rootScope.api_url = 'http://api.gondola.space';
+    $rootScope.api_url = 'https://api.gondola.space';
     //$rootScope.api_url = 'http://localhost:3000';
   })
   .config(function ($stateProvider, $urlRouterProvider, ezfbProvider) {
