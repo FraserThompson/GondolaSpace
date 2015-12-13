@@ -9,11 +9,10 @@ angular.module('publicApp')
         });
       }
 
-      this.createUser = function (data) {
+      this.createUser = function () {
         return $http({
           method: 'POST',
           url: api + '/user',
-          data: {'signedRequest': data},
           headers: {
             'Authorization': $rootScope.signedRequest
           }

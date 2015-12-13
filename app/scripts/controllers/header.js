@@ -17,7 +17,8 @@ angular.module('publicApp')
 	$scope.login = function () {
 	    ezfb.login(function (res1) {
 	      if (res1.authResponse) {
-			UserService.createUser(res1.authResponse.signedRequest);
+	      	$rootScope.signedRequest = res1.authResponse.signedRequest;
+			UserService.createUser();
 	        updateLoginStatus(updateApiMe);
 	      } else {
 	      	console.log('no auth');

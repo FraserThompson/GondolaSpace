@@ -17,7 +17,7 @@ angular.module('publicApp')
         $scope.favoriteGondola = gondola;
       });
 
-    GondolaService.getFromOwner($scope.user.id)
+    GondolaService.getFromOwner($scope.user._id)
       .then(function (gondolas) {
         console.log(gondolas);
         $scope.gondolas = gondolas;
