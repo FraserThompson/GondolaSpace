@@ -56,11 +56,13 @@ angular.module('publicApp')
           method: 'GET',
           url: api + '/api?random=1'
         }).then( function (gondola) {
-          if (gondola.data.length == 0){
+          console.log(gondola);
+          if (gondola.data === null){
             deferred.resolve(null);
+          } else {
+            gondola.data.flavour = self.getFlavour(gondola.data);
+            deferred.resolve(gondola.data);
           }
-          gondola.data.flavour = self.getFlavour(gondola.data);
-          deferred.resolve(gondola.data);
         }, function (err) {
           deferred.reject(err);
         });
@@ -75,11 +77,12 @@ angular.module('publicApp')
           method: 'GET',
           url: api + '/api?id=' + id
         }).then( function (gondola) {
-          if (!gondola.data){
+          if (gondola.data === null){
             deferred.resolve(null);
+          } else {
+            gondola.data[0].flavour = self.getFlavour(gondola.data[0]);
+            deferred.resolve(gondola.data[0]);
           }
-          gondola.data[0].flavour = self.getFlavour(gondola.data[0]);
-          deferred.resolve(gondola.data[0]);
         }, function (err) {
           deferred.reject(err);
         });

@@ -20,7 +20,7 @@ angular
     'ui.bootstrap'
   ])
   .run(function ($rootScope) {
-    $rootScope.api_url = 'http://gondola.space';
+    $rootScope.api_url = 'http://api.gondola.space';
     //$rootScope.api_url = 'http://localhost:3000';
   })
   .config(function ($stateProvider, $urlRouterProvider, ezfbProvider) {
@@ -42,7 +42,6 @@ angular
         resolve: { 
           gondola: function(GondolaService, $stateParams) {
               if ($stateParams.gondola) {
-                console.log($stateParams.gondola);
                 return GondolaService.getSpecific($stateParams.gondola);
               } else {
                 return GondolaService.getRandom();
@@ -50,7 +49,9 @@ angular
           }
         },
         onEnter: function($location, gondola) {
-          $location.search('gondola', gondola._id)
+          if (gondola){
+            $location.search('gondola', gondola._id)
+          }
         }
       })
       .state('profile', {
