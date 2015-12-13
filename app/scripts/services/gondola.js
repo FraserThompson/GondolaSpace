@@ -1,8 +1,7 @@
 angular.module('publicApp')
-  .service('GondolaService', function ($http, $q) {
+  .service('GondolaService', function ($rootScope, $http, $q) {
       var self = this;
-      //var api = "http://localhost:3000";
-      var api = 'http://45.55.61.237';
+      var api = $rootScope.api_url;
 
       this.getFlavour = function (gondola){
         var keys = Object.keys(gondola.flavours);
@@ -57,6 +56,9 @@ angular.module('publicApp')
           method: 'GET',
           url: api + '/api?random=1'
         }).then( function (gondola) {
+          if (gondola.data.length == 0){
+            deferred.resolve(null);
+          }
           gondola.data.flavour = self.getFlavour(gondola.data);
           deferred.resolve(gondola.data);
         }, function (err) {
@@ -73,6 +75,9 @@ angular.module('publicApp')
           method: 'GET',
           url: api + '/api?id=' + id
         }).then( function (gondola) {
+          if (!gondola.data){
+            deferred.resolve(null);
+          }
           gondola.data[0].flavour = self.getFlavour(gondola.data[0]);
           deferred.resolve(gondola.data[0]);
         }, function (err) {

@@ -8,19 +8,18 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('MainCtrl', function ($scope, $state, $location, $stateParams, $http, gondola, GondolaService, UserService) {
+  .controller('MainCtrl', function ($rootScope, $scope, $state, $location, $stateParams, $http, gondola, GondolaService, UserService) {
   	var votedFlavours = {};
   	var votedVote = "";
 
-  	$scope.api_url = 'http://45.55.61.237';
-  	//$scope.api_url = 'http://localhost:3000';
-
   	$scope.gondola = gondola;
 
-  	UserService.getUser(gondola.owner)
-	  	.then (function (owner) {
-	  		$scope.owner = owner.data;
-	  	});
+  	if(gondola){
+	  	UserService.getUser(gondola.owner)
+		  	.then (function (owner) {
+		  		$scope.owner = owner.data;
+		  	});
+	}
 
     $scope.getRandom = function() {
     	GondolaService.getRandom()
@@ -33,17 +32,6 @@ angular.module('publicApp')
     }
 
   	/***************************** GONDOLA METHODS *************************************/
-  	// Uploads a new Gondola
-	$scope.uploadGondola = function () {
-		GondolaService.uploadGondola($scope.gondolaFile)
-			.then (function (gondola) {
-				$scope.gondola = gondola.data;
-				$('#myModal').modal('hide');
-			}, function (err) {
-				console.log(err);
-			});
-	}
-
   	// Vote a gondola up or down
   	$scope.updateVote = function (id, voted, flavour) {
   		if ((flavour == "umami" && votedVote == "notUmami") || (flavour == "notUmami" && votedVote == "umami")){

@@ -8,12 +8,9 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('HeaderCtrl', function ($scope, $state, $timeout, ezfb, GondolaService, UserService) {
+  .controller('HeaderCtrl', function ($rootScope, $scope, $state, $timeout, ezfb, GondolaService, UserService) {
   	$scope.user = {};
   	$scope.loginStatus = {};
-  	
-  	$scope.api_url = 'http://45.55.61.237';
-  	//$scope.api_url = 'http://localhost:3000';
 
   	 /***************************** FACEBOOK METHODS *************************************/
   	// Login to Facebook
@@ -22,6 +19,8 @@ angular.module('publicApp')
 	      if (res1.authResponse) {
 			UserService.createUser(res1.authResponse.signedRequest);
 	        updateLoginStatus(updateApiMe);
+	      } else {
+	      	console.log('no auth');
 	      }
 	    }, {scope: 'public_profile'});
 	};
@@ -60,6 +59,17 @@ angular.module('publicApp')
 				$timeout( function (){
 					$scope.user.pic = user.data.pic;
 				}, 1000)
+			}, function (err) {
+				console.log(err);
+			});
+	}
+
+  	// Uploads a new Gondola
+	$scope.uploadGondola = function () {
+		GondolaService.uploadGondola($scope.gondolaFile)
+			.then (function (gondola) {
+				$('#gondolaModal').modal('hide');
+				$state.go('home', {gondola: gondola.data._id}, {'reload': true});
 			}, function (err) {
 				console.log(err);
 			});

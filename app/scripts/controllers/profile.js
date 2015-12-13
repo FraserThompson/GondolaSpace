@@ -8,7 +8,7 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('ProfileCtrl', function ($scope, $state, $stateParams, $http, user, UserService, GondolaService) {
+  .controller('ProfileCtrl', function ($rootScope, $scope, $state, $stateParams, $http, user, UserService, GondolaService) {
     $scope.user = user.data;
     $scope.favoriteGondola = {};
 

@@ -19,14 +19,18 @@ angular
     'ezfb',
     'ui.bootstrap'
   ])
+  .run(function ($rootScope) {
+    $rootScope.api_url = 'http://gondola.space';
+    //$rootScope.api_url = 'http://localhost:3000';
+  })
   .config(function ($stateProvider, $urlRouterProvider, ezfbProvider) {
     ezfbProvider.setLocale('en_NZ');
 
     ezfbProvider.setInitParams({
 
-    appId: '156068884749797',
-    version: 'v2.5'
-  });  
+      appId: '156068884749797',
+      version: 'v2.5'
+    });  
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
