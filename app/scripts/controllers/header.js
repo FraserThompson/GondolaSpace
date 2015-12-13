@@ -32,7 +32,8 @@ angular.module('publicApp')
 	// Get whether we're logged in
 	var updateLoginStatus = function (more) {
 		ezfb.getLoginStatus(function (res) {
-		  $scope.loginStatus = res;
+			$rootScope.signedRequest = res.authResponse.signedRequest;
+		  	$scope.loginStatus = res;
 		  (more || angular.noop)();
 		});
 	}
@@ -48,6 +49,8 @@ angular.module('publicApp')
 	$scope.getUser = function (id) {
 		UserService.getUser(id)
 			.then(function(user) {
+				console.log('GOT USER');
+				console.log(user);
 				$scope.user = user.data;
 			});
 	}

@@ -22,12 +22,12 @@ angular.module('publicApp')
         fd.append('gondola', file);
 
          var request = {
-            withCredentials: true,
             method: 'POST',
             url: api + '/',
             data: fd,
             headers: {
-                'Content-Type': undefined
+                'Content-Type': undefined,
+                'Authorization': $rootScope.signedRequest
             }
         };
 

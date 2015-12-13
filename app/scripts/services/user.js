@@ -11,19 +11,23 @@ angular.module('publicApp')
 
       this.createUser = function (data) {
         return $http({
-          withCredentials: true,
           method: 'POST',
           url: api + '/user',
-          data: {'signedRequest': data}
+          data: {'signedRequest': data},
+          headers: {
+            'Authorization': $rootScope.signedRequest
+          }
         });
       }
 
       this.updateUser = function (data) {
         return $http({
-          withCredentials: true,
           method: 'PUT',
           url: api + '/user',
-          data: {'update': data}
+          data: {'update': data},
+          headers: {
+            'Authorization': $rootScope.signedRequest
+          }
         });
       }
 
@@ -32,12 +36,12 @@ angular.module('publicApp')
         fd.append('profile', file);
 
          var request = {
-            withCredentials: true,
             method: 'POST',
             url: api + '/user/pic',
             data: fd,
             headers: {
-                'Content-Type': undefined
+                'Content-Type': undefined,
+                'Authorization': $rootScope.signedRequest
             }
         };
 
