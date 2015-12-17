@@ -13,6 +13,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/angular-ui-notification/dist/angular-ui-notification.css">
     <!-- endbuild -->
   </head>
   <body ng-app="publicApp">
@@ -30,37 +31,24 @@
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="" data-toggle="modal" data-target="#gondolaModal" ng-hide="loginStatus.status != 'connected'">Upload</a></li>
-              <li ng-hide="loginStatus.status == 'connected'"><a href="" ng-click="login()">Connect with Facebook</a></li>
-              <li class="dropdown" ng-hide="loginStatus.status != 'connected'">
+              <li><a href="" data-toggle="modal" data-target="#gondolaModal" ng-hide="loginStatus.status != 'connected' || !LOGGED_IN_USER">Upload</a></li>
+              <li ng-hide="loginStatus.status == 'connected' && LOGGED_IN_USER"><a href="" ng-click="login()">Connect with Facebook</a></li>
+              <li class="dropdown" ng-hide="loginStatus.status != 'connected' || !LOGGED_IN_USER">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="" data-toggle="modal" data-target="#profileModal"><img ng-src="{{api_url}}/uploads/profile/{{user.pic}}" alt="user" width="80" height="80"/></a></li>
-                  <li><a href="#/profile/{{user.id}}">Bio</a></li>
+                  <li><a href="" ui-sref="profile({id: LOGGED_IN_USER._id })">
+                    <div ng-if="LOGGED_IN_USER.pic != ''">
+                      <img ng-src="{{api_url}}{{LOGGED_IN_USER.pic}}" alt="user" width="80" height="80"/>
+                    </div>
+                    <div ng-if="LOGGED_IN_USER.pic ==''">
+                      See yourself
+                    </div>
+                    </a></li>
                 </ul>
               </li>
             </ul>
           </div>
         </div>
-        </div>
-      </div>
-
-      <!-- Profile Modal -->
-      <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="profileModalLabel">Upload Profile Picture</h4>
-            </div>
-            <div class="modal-body">
-              <form ng-submit="uploadProfile()" enctype="multipart/form-data">
-                  <input type="file" class="btn btn-default" name="profile" id="profile" file-model="profileFile">
-                  <br>
-                  <input type="submit" class="btn btn-primary" name="submit" value="Submit"/>
-              </form>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -100,15 +88,14 @@
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+       // !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       // (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       // r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       // }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
+       // ga('create', 'UA-XXXXX-X');
+       // ga('send', 'pageview');
     </script>
-
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -123,11 +110,12 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-easyfb/build/angular-easyfb.js"></script>
+    <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.js"></script>
+    <script src="bower_components/angular-canvas-painter/dist/angular-canvas-painter.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/dependencies/ui-bootstrap-custom-0.14.3.js"></script>
-        <script src="scripts/dependencies/ui-bootstrap-custom-tpls-0.14.3.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/directives/file.js"></script>
         <script src="scripts/services/gondola.js"></script>

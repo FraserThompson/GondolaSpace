@@ -1,16 +1,36 @@
 <div class="row">
 	<div class="col-sm-2">
-		<img ng-src="{{api_url}}/uploads/profile/{{user.pic}}" alt="owner"/>
+		<div ng-if="user.pic != ''">
+			<img ng-src="{{pic_url}}" alt="owner"/>
+		</div>
+		<div ng-if="user.pic == ''">
+			No user pic.
+		</div>
+		<button ng-if="LOGGED_IN_USER._id = user._id" class="btn btn-primary" popover-placement="bottom" uib-popover-template="'upload_popover.html'" popover-title="Draw" type="button" class="btn btn-default">Draw something</button>
 	</div>
 	<div class="col-sm-10">
-		<p ng-hide="{{user.description}}">No description.</p>
+		<p ng-hide="{{user.description != ''}}">This gondola has nothing to say about themselves.</p>
 		<p>{{user.description}}</p>
+		<button ng-if="LOGGED_IN_USER._id = user._id" class="btn btn-primary" popover-placement="bottom" uib-popover-template="'description_popover.html'" popover-title="Write" type="button" class="btn btn-default">Say something</button>
 	</div>
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<h2>Favorite Gondola:</h2>
-      	<img ng-src="{{api_url}}/uploads/gondola/{{favoriteGondola.file.thumbnail}}" style="width: 50%;" alt="Gondola"/>
+		<h2>Favorite Gondolas:</h2>
+	</div>
+</div>
+<div class="row">
+	<div ng-if="fav_gondolas">
+		<div ng-repeat="gondola in fav_gondolas">
+			<div class="col-sm-3">
+				<a href="" ui-sref="home({gondola: gondola._id})"><img ng-src="{{api_url}}/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/></a>
+			</div>
+		</div>
+	</div>
+	<div ng-show="!fav_gondolas">
+		<div class="col-sm-12">
+			<h3>None yet!</h3>
+		</div>
 	</div>
 </div>
 <div class="row">
@@ -19,9 +39,35 @@
 	</div>
 </div>
 <div class="row">
-	<div ng-repeat="gondola in gondolas">
-		<div class="col-sm-3">
-			<a href="" ui-sref="home({gondola: gondola._id})"><img ng-src="{{api_url}}/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/></a>
+	<div ng-if="own_gondolas">
+		<div ng-repeat="gondola in own_gondolas">
+			<div class="col-sm-3">
+				<a href="" ui-sref="home({gondola: gondola._id})"><img ng-src="{{api_url}}/uploads/gondola/{{gondola.file.thumbnail}}" style="width: 100%;" alt="Gondola"/></a>
+			</div>
+		</div>
+	</div>
+	<div ng-show="!own_gondolas">
+		<div class="col-sm-12">
+			<h3>None yet!</h3>
 		</div>
 	</div>
 </div>
+
+<script type="text/ng-template" id="upload_popover.html">
+	<div>
+	<div pw-canvas options="{width: 80, height: 80, color: model.myColor, customCanvasId: 'canvas'}"></div>
+	<div pw-color-selector="['#000', '#00f', '#0f0', '#f00']" color="model.myColor"></div>
+	<button class="btn btn-default" ng-click="uploadProfile()">Save</button>
+	</div>
+</script>
+
+<script type="text/ng-template" id="description_popover.html">
+	<div style="width: 400px;">
+		<div class="row">
+			<div class="col-sm-12">
+				<textarea rows="4" cols="10" id="user_description"></textarea>
+			</div>
+		</div>
+		<button class="btn btn-default" ng-click="uploadDescription()">Save</button>
+	</div>
+</script>

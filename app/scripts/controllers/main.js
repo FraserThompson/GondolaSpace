@@ -19,7 +19,7 @@ angular.module('publicApp')
 		  	.then (function (owner) {
 		  		$scope.owner = owner.data;
 		  	});
-	}
+	  }
 
     $scope.getRandom = function() {
     	GondolaService.getRandom()
@@ -66,7 +66,7 @@ angular.module('publicApp')
   		UserService.updateUser({'favorite': id});
   	}
 
-	$('#myModal').on('hidden.bs.modal', function (e) {
-		$state.go('home', { gondola: $scope.gondola._id }, {notify:false, reload:true});
-	});
+  	$('#myModal').on('hidden.bs.modal', function (e) {
+  		$state.go('home', { gondola: $scope.gondola._id }, {notify:false, reload:true});
+  	});
   });

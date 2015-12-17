@@ -17,13 +17,25 @@ angular
     'ngSanitize',
     'ngTouch',
     'ezfb',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui-notification',
+    'pw.canvas-painter'
   ])
   .run(function ($rootScope) {
     $rootScope.api_url = 'https://api.gondola.space';
-    //$rootScope.api_url = 'http://localhost:3000';
+    // $rootScope.api_url = 'http://localhost:3000';
   })
-  .config(function ($stateProvider, $urlRouterProvider, ezfbProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, NotificationProvider, ezfbProvider) {
+    NotificationProvider.setOptions({
+        delay: 10000,
+        startTop: 20,
+        startRight: 10,
+        verticalSpacing: 20,
+        horizontalSpacing: 20,
+        positionX: 'left',
+        positionY: 'bottom'
+    });
+
     ezfbProvider.setLocale('en_NZ');
 
     ezfbProvider.setInitParams({
@@ -60,6 +72,7 @@ angular
         controller: 'ProfileCtrl',
         resolve: { 
           user: function(UserService, $stateParams) {
+            console.log($stateParams.id);
             return UserService.getUser($stateParams.id)
           }
         }

@@ -33,6 +33,9 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-easyfb/build/angular-easyfb.js',
+      'bower_components/angular-ui-notification/dist/angular-ui-notification.js',
+      'bower_components/angular-canvas-painter/dist/angular-canvas-painter.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

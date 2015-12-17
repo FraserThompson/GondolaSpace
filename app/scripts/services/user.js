@@ -30,16 +30,12 @@ angular.module('publicApp')
         });
       }
 
-      this.uploadProfile = function (file) {
-        var fd = new FormData();
-        fd.append('profile', file);
-
+      this.uploadProfile = function (dataUrl) {
          var request = {
             method: 'POST',
             url: api + '/user/pic',
-            data: fd,
+            data: { 'pic': dataUrl },
             headers: {
-                'Content-Type': undefined,
                 'Authorization': $rootScope.signedRequest
             }
         };

@@ -8,8 +8,8 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('HeaderCtrl', function ($rootScope, $scope, $state, $timeout, ezfb, GondolaService, UserService) {
-  	$scope.user = {};
+  .controller('HeaderCtrl', function ($rootScope, $scope, $state, $timeout, Notification, ezfb, GondolaService, UserService) {
+  	$rootScope.LOGGED_IN_USER = {};
   	$scope.loginStatus = {};
 
   	 /***************************** FACEBOOK METHODS *************************************/
@@ -50,26 +50,21 @@ angular.module('publicApp')
 	$scope.getUser = function (id) {
 		UserService.getUser(id)
 			.then(function(user) {
-				console.log('GOT USER');
-				console.log(user);
-				$scope.user = user.data;
-			});
-	}
-
-	$scope.uploadProfile = function () {
-		UserService.uploadProfile($scope.profileFile)
-			.then (function (user) {
-				$('#profileModal').modal('hide');
-				$timeout( function (){
-					$scope.user.pic = user.data.pic;
-				}, 1000)
-			}, function (err) {
-				console.log(err);
+				$rootScope.LOGGED_IN_USER = user.data;
+				Notification.success('Successfully logged in as ' + $rootScope.LOGGED_IN_USER._id);
+				console.log($rootScope.LOGGED_IN_USER._id);
+				if (!user.data.pic){
+					Notification.warning('You should set a profile pic.');
+				}
 			});
 	}
 
   	// Uploads a new Gondola
 	$scope.uploadGondola = function () {
+		if ($rootScope.LOGGED_IN_USER.pic == ''){ 
+			Notification.error('You need a profile pic before you can submit a gondola.');
+		 	return;
+		}
 		GondolaService.uploadGondola($scope.gondolaFile)
 			.then (function (gondola) {
 				$('#gondolaModal').modal('hide');
